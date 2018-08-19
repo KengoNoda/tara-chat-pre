@@ -7,7 +7,7 @@ RUN set -x && \
 	 yum install -y https://centos7.iuscommunity.org/ius-release.rpm 
 
 	# pyenv をインストール（pythonのversion管理のため）
-	yum install gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git
+	yum install -y gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git
 	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 	echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bash_profile
 	echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
