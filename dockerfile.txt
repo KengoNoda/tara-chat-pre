@@ -1,0 +1,27 @@
+
+FROM centos
+
+RUN set -x && \
+	#python3系は，yumのデフォルトのリポジトリに入っていない
+	#IUS Community Project(python,pipなどの最新RPMパッケージを配布)のリポジトリを追加
+	 yum install -y https://centos7.iuscommunity.org/ius-release.rpm 
+
+	# pyenv をインストール（pythonのversion管理のため）
+	yum install gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git
+	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+	echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bash_profile
+	echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+	source ~/.bash_profile
+
+	# 任意のpython をインストールし，バージョンを切り替える
+	pyenv install 3.6.6
+	pyenv global 3.6.6
+	pyenv rehash
+
+	# Mecabのインストール
+	rpm -ivh http://packages.groonga.org/centos/groonga-release-1.1.0-1.noarch.rpm
+	yum install -y mecab mecab-ipadic mecab-devel
+
+	# Mecab をpython 上で使うため，mecab-python をインストール
+	yum -y install gcc-c++ kernel-devel
+	pip install mecab-python3
